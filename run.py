@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import os
 
 app = Flask(__name__)
@@ -6,13 +6,14 @@ app = Flask(__name__)
 @app.route('/')
 
 def index():
-    return "Hello world"
+    return render_template('base.html')
     
 @app.route('/about')
 
 def about():
     return 'about us'
     
+
 if __name__ == '__main__':
     app.run(
             host=os.getenv('IP'),
