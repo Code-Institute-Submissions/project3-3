@@ -11,9 +11,20 @@
             <h1>Riddle Me This</h1>
             {% if username %}
                 Welcome {{ username }}
+                <div class="game-div">
+                    Here's a question: What year was Stalin born?
+                    <form method="POST" style="margin-top: 20px; margin-right: 10px;">
+                        <label for="answer"></label>
+                        <input type="text" name="answer"/>
+                        <input type="submit" value="Submit"/>
+                    </form>
+                </div>
+            {% elif answer %}
+                TODO
+                
             {% else %}
                 <div style="margin-top:10%">
-                    <form method="POST">
+                    <form method="POST" style="margin-top: 20px; margin-right: 10px;">
                         <label for="Username">Username</label>
                         <input type="text" name="Username"/>
                         <input type="submit" value="Submit"/>

@@ -11,9 +11,12 @@ def index():
     return render_template('base.html')
     
 @app.route('/', methods = ['POST'])
-def user():
-    print (request.form['Username'])
-    return render_template('base.html', username = request.form['Username'])
+def game():
+    if ('Username' in request.form):
+        print (request.form['Username'])
+        return render_template('base.html', username = request.form['Username'])
+    else:
+        return render_template('base.html', answer = request.form['answer'])
 
 def about():
     return 'about us'
