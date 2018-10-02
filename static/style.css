@@ -2,4 +2,12 @@
     background-color: #041a3d ;
     width: 100%;
     height: 100%;
+    color: silver;
+    font-size: 1em;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+body {
+    margin: 0;
 }
