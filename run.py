@@ -16,6 +16,9 @@ scores = { }
 def get_next_question(user):
     return questions[scores[user]['question']]
     
+def getScore(user):
+    return scores[user]['score']
+    
 def check_answer(user, answer):
     q = get_next_question(user)
     
@@ -51,10 +54,10 @@ def game(username):
             scores[username]['question'] += 1
             scores[username]['score'] += 1
             question = get_next_question(username)[0]
-            return render_template('base.html', username = username, success = True, question = question)
+            return render_template('base.html', username = username, success = True, question = question, score = getScore(username))
         else:
             #wrong answer
-            return render_template('base.html', wrong_answer = request.form['answer'], username = username, success = False, question = question)
+            return render_template('base.html', wrong_answer = request.form['answer'], username = username, success = False, question = question, score = getScore(username))
     return render_template('base.html', firstRound = True, username = username, question = question)
     
 @app.route('/<username>', methods = ['GET', 'POST'])
