@@ -4,14 +4,28 @@ import os
 
 app = Flask(__name__)
 
-# list of tuples, going to load questions into it from a file later
-questions = [
-        ('What is what?', 'i dunno'),
-        ("How are you?", 'Good'),
-        ("Capital of france?", "Paris")
-    ]
+# list of tuples
+questions = []
 
 #
+def loadQuestions():
+    file = 'data/questions.txt'
+    with open(file) as fp:
+        question = ''
+        answer = ''
+        for i, line in enumerate(fp):
+            
+            line = line.decode("UTF-8").rstrip()
+            if i % 2 == 0:
+                # it's a question
+                question = line
+            else:
+                answer = line
+                questions.append( (question, answer) )
+            
+loadQuestions()
+print(questions)
+
 scores = { }
 def get_next_question(user):
     return questions[scores[user]['question']]
@@ -19,19 +33,6 @@ def get_next_question(user):
 def getScore(user):
     return scores[user]['score']
     
-def check_answer(user, answer):
-    q = get_next_question(user)
-    
-    if q[1].lower() == answer.lower():
-        scores[user]['score'] += 2
-        print ('score for user: ' + user + ' : ' + str(scores[user]['score']))
-        return q[1]
-    else:
-        # write down invalid answer to a div below
-        print(answer)
-        return False   
-    # up the round number anyway
-
 @app.route('/')
 def index():
     return render_template('base.html')
