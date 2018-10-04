@@ -51,13 +51,14 @@ def login():
 def game(username):
     question, answer = get_next_question(username)
     if ('answer' in request.form):
-        if answer.lower() == request.form['answer'].lower():
+        if answer.lower() in request.form['answer'].lower():
             scores[username]['question'] += 1
-            scores[username]['score'] += 1
+            scores[username]['score'] += 3
             question = get_next_question(username)[0]
             return render_template('base.html', username = username, success = True, question = question, score = getScore(username))
         else:
             #wrong answer
+            scores[username]['score'] -= 1
             return render_template('base.html', wrong_answer = request.form['answer'], username = username, success = False, question = question, score = getScore(username))
     return render_template('base.html', firstRound = True, username = username, question = question)
     
