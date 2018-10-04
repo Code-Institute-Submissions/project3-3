@@ -2,7 +2,7 @@
 <html>
     <head>
         <title> Riddle Me This</title>
-        <link rel="stylesheet" href="static/style.css" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     </head>
     
     <body>
@@ -12,16 +12,22 @@
             {% if username %}
                 Welcome {{ username }}
                 <div class="game-div">
-                    Here's a question: What year was Stalin born?
+                    Here's a question: {{ question }}
                     <form method="POST" style="margin-top: 20px; margin-right: 10px;">
                         <label for="answer"></label>
                         <input type="text" name="answer"/>
                         <input type="submit" value="Submit"/>
                     </form>
                 </div>
-            {% elif answer %}
-                TODO
-                
+            
+                {% if not firstRound %}
+                    {% if success %}
+                        <span style="color: yellow"> Great! Next question</span>
+                    {% else %}
+                        <span style="color: grey"> Wrong, better luck next time</span>
+                        <div id="wrong_answer">Your answer: {{wrong_answer}}</div>
+                    {% endif %}
+                {% endif %}
             {% else %}
                 <div style="margin-top:10%">
                     <form method="POST" style="margin-top: 20px; margin-right: 10px;">
