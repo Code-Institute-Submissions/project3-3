@@ -17,7 +17,7 @@
             <span style="color: yellow"> Great! Next question {{ count }}</span> {% else %}
             <span style="color: grey"> Wrong answer to question {{ count }}: {{ wrong_answer }}</span> {% endif %} {% endif %}
             <div class="game-div">
-                Here's a question: {{ question }}
+                <span style="font-size: 2em; background-color: white; color: red"> {{ question }} </span>
                 <form method="POST" style="margin-top: 20px; margin-right: 10px;">
                     <label for="answer"></label>
                     <input type="text" name="answer" />
@@ -35,11 +35,15 @@
                 </form>
             </div>
             {% endif %}
+            {% if debug %}
+                <p><h3>Debug mode</h3></p>
+                <p>Correct answer: <span style="background-color:white; color: red">{{ debug }} </span></p>
+            {% endif %}
 
         </div>
         <div class="right-box">
             <div class="highscores">
-                <h2>HIGHSCORES</h2>
+                <h2 style="margin-top:0px">HIGHSCORES</h2>
                 <ol>
                     {% for score in scores %}
                     <li> {{ score[0] }} : {{ score[1] }} </li>

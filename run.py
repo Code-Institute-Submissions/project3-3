@@ -4,7 +4,7 @@ import os
 import time
 app = Flask(__name__)
 
-
+# remove passing debug (answer) to render_template on release
 highscores = { }
 
 class Player:
@@ -88,7 +88,7 @@ def game(username):
         else:
             #wrong answer
             player.removePoints()
-            return render_template('base.html',time = time.time(), scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
+            return render_template('base.html', debug = answer, time = time.time(), scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
     return render_template('base.html',time = time.time(),  scores = Player.getScores(), firstRound = True, username = username, question = question)
     
 @app.route('/<username>', methods = ['GET', 'POST'])
