@@ -16,8 +16,7 @@
                     {% if success %}
                         <span style="color: yellow"> Great! Next question</span>
                     {% else %}
-                        <span style="color: grey"> Wrong, better luck next time</span>
-                        <div id="wrong_answer">Your answer: {{wrong_answer}}</div>
+                        <span style="color: grey"> Wrong answer: {{ wrong_answer }}</span>
                     {% endif %}
                 {% endif %}
                 <div class="game-div">

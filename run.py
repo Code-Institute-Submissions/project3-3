@@ -22,9 +22,9 @@ class Player:
         if self.score < 0:
             self.score = 0
             
-    def getQandA(self):
+    def getQandA(self): # returns ('question', 'answer')
         return questions[self.question]
-    def getQuestion(self):
+    def getQuestion(self): # returns 'question'
         return questions[self.question][0]
     @classmethod
     def exists(cls, name):
@@ -34,20 +34,24 @@ questions = [] # ('question', 'answer')
 users = { } # 'name' = Player obj
 
 #
+ 
 def loadQuestions():
+    count = 0
     with open('data/questions.txt', 'r') as fp:
         question, answer = '', ''
         for i, line in enumerate(fp):
             line = line.decode("UTF-8").rstrip()
-            if i % 2 == 0:
-                # it's a question
+            if i % 2 == 0: # it's a question
                 question = line
+                count += 1
             else:
                 answer = line
                 questions.append( (question, answer) )
-            
-loadQuestions()
+    return count            
+       
+totalQuestions = loadQuestions()
 
+print (totalQuestions)
 @app.route('/')
 def index():
     return render_template('base.html')
