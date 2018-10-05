@@ -8,6 +8,7 @@
     <body>
         
         <div class="container">
+
             <h1>Riddle Me This</h1>
             {% if username %}
                 Welcome {{ username }}
@@ -38,6 +39,14 @@
                     </form>
                 </div>
             {% endif %}
+            <div class="highscores">
+                <ol>
+                {% for score in scores %}
+                    <li> {{ score[0] }} : {{ score[1] }} </li>
+                   
+                {% endfor %}
+                </ol> 
+            </div>
         </div>
     </body>
 </html>

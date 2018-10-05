@@ -5,12 +5,12 @@ import os
 app = Flask(__name__)
 
 
-scores = { }
+highscores = { }
 
 class Player:
     @staticmethod
     def getScores():    # returns a list of tuples with highscores
-        return sorted(scores.items(), reverse = True, key=operator.itemgetter(1))
+        return sorted(highscores.items(), reverse = True, key=operator.itemgetter(1))
                 
     def __init__(self, name):
         self.name = name
@@ -22,14 +22,14 @@ class Player:
         self.score += number
         # since we're adding points, we can as well advance question
         self.question += 1
-        scores[self.name] = self.score
+        highscores[self.name] = self.score
 
         
     def removePoints(self, number = 1):
         self.score -= number
         if self.score < 0:
             self.score = 0
-        scores[self.name] = self.score
+        highscores[self.name] = self.score
         
     def getQandA(self): # returns ('question', 'answer')
         return questions[self.question]
@@ -84,12 +84,12 @@ def game(username):
         print(Player.getScores())
         if answer.lower() in request.form['answer'].lower():
             player.addPoints()
-            return render_template('base.html', count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), username = username, success = True, question = player.getQuestion(), score = player.score)
+            return render_template('base.html', scores = Player.getScores(),  count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), username = username, success = True, question = player.getQuestion(), score = player.score)
         else:
             #wrong answer
             player.removePoints()
-            return render_template('base.html',count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
-    return render_template('base.html', firstRound = True, username = username, question = question)
+            return render_template('base.html', scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
+    return render_template('base.html', scores = Player.getScores(), firstRound = True, username = username, question = question)
     
 @app.route('/<username>', methods = ['GET', 'POST'])
 def user(username):
