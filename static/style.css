@@ -1,21 +1,45 @@
 .container {
     background-color: #041a3d ;
-    width: 100%;
+    width: 90%;
     height: 100%;
     color: silver;
     font-size: 1em;
     text-align: center;
     margin: 0 auto;
     padding-top: 20px;
+    display: inline-block;
 }
 body {
     margin: 0;
+    background-color:black;
+}
+.left-box {
+    border: 5px solid white;
+    display: inline-block;
+    width: 60%;
+    height: 70%;
+    margin-left: 10%;
+}
+.right-box {
+    border: 5px solid white;
+    display: inline-block;
+    float: right;
+    width: 15%;
+    margin-right: 10%;
+    height: 70%;
 }
 .game-div {
     padding-top: 30px;
     padding-bottom: 30px;
+    background-color: #062960;
+    z-index: 999;
+    opacity: 0.5;
 }
 .highscores {
     background-color: grey;
-    width: 200px;
+    width: 90%%;
+    top: 5;
+    right: 5;
+    opacity: 0.5;
+    border-radius: 10px;
 }

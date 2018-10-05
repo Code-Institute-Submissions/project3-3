@@ -1,52 +1,54 @@
 <!<!DOCTYPE html>
 <html>
-    <head>
-        <title> Riddle Me This</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    
-    <body>
-        
-        <div class="container">
 
+<head>
+    <title> Riddle Me This</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}?v={{time}}">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="left-box">
             <h1>Riddle Me This</h1>
-            {% if username %}
-                Welcome {{ username }}
-                {% if not firstRound %}
-                    <p> Current score: {{score}}</p>
-                    {% if success %}
-                        <span style="color: yellow"> Great! Next question {{ count }}</span>
-                    {% else %}
-                        <span style="color: grey"> Wrong answer to question {{ count }}: {{ wrong_answer }}</span>
-                    {% endif %}
-                {% endif %}
-                <div class="game-div">
-                    Here's a question: {{ question }}
-                    <form method="POST" style="margin-top: 20px; margin-right: 10px;">
-                        <label for="answer"></label>
-                        <input type="text" name="answer"/>
-                        <input type="submit" value="Submit"/>
-                    </form>
-                </div>
-            
+            {% if username %} Welcome {{ username }} {% if not firstRound %}
+            <p> Current score: {{score}}</p>
+            {% if success %}
+            <span style="color: yellow"> Great! Next question {{ count }}</span> {% else %}
+            <span style="color: grey"> Wrong answer to question {{ count }}: {{ wrong_answer }}</span> {% endif %} {% endif %}
+            <div class="game-div">
+                Here's a question: {{ question }}
+                <form method="POST" style="margin-top: 20px; margin-right: 10px;">
+                    <label for="answer"></label>
+                    <input type="text" name="answer" />
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+
 
             {% else %}
-                <div style="margin-top:10%">
-                    <form method="POST" style="margin-top: 20px; margin-right: 10px;">
-                        <label for="Username">Username</label>
-                        <input type="text" name="Username"/>
-                        <input type="submit" value="Submit"/>
-                    </form>
-                </div>
-            {% endif %}
-            <div class="highscores">
-                <ol>
-                {% for score in scores %}
-                    <li> {{ score[0] }} : {{ score[1] }} </li>
-                   
-                {% endfor %}
-                </ol> 
+            <div style="margin-top:10%">
+                <form method="POST" style="margin-top: 20px; margin-right: 10px;">
+                    <label for="Username">Username</label>
+                    <input type="text" name="Username" />
+                    <input type="submit" value="Submit" />
+                </form>
             </div>
+            {% endif %}
+
         </div>
-    </body>
+        <div class="right-box">
+            <div class="highscores">
+                <h2>HIGHSCORES</h2>
+                <ol>
+                    {% for score in scores %}
+                    <li> {{ score[0] }} : {{ score[1] }} </li>
+
+                    {% endfor %}
+                </ol>
+            </div>            
+        </div>
+    </div>
+</body>
+
 </html>

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import operator
 import os
-
+import time
 app = Flask(__name__)
 
 
@@ -84,16 +84,16 @@ def game(username):
         print(Player.getScores())
         if answer.lower() in request.form['answer'].lower():
             player.addPoints()
-            return render_template('base.html', scores = Player.getScores(),  count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), username = username, success = True, question = player.getQuestion(), score = player.score)
+            return render_template('base.html', time = time.time(), scores = Player.getScores(),  count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), username = username, success = True, question = player.getQuestion(), score = player.score)
         else:
             #wrong answer
             player.removePoints()
-            return render_template('base.html', scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
-    return render_template('base.html', scores = Player.getScores(), firstRound = True, username = username, question = question)
+            return render_template('base.html',time = time.time(), scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
+    return render_template('base.html',time = time.time(),  scores = Player.getScores(), firstRound = True, username = username, question = question)
     
 @app.route('/<username>', methods = ['GET', 'POST'])
 def user(username):
-    return render_template('base.html', username=username)
+    return render_template('base.html',time = time.time(),  username=username)
     
     
 if __name__ == '__main__':
