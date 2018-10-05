@@ -74,11 +74,11 @@ def game(username):
     if ('answer' in request.form):
         if answer.lower() in request.form['answer'].lower():
             player.addPoints()
-            return render_template('base.html', username = username, success = True, question = player.getQuestion(), score = player.score)
+            return render_template('base.html', count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), username = username, success = True, question = player.getQuestion(), score = player.score)
         else:
             #wrong answer
             player.removePoints()
-            return render_template('base.html', wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
+            return render_template('base.html',count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
     return render_template('base.html', firstRound = True, username = username, question = question)
     
 @app.route('/<username>', methods = ['GET', 'POST'])

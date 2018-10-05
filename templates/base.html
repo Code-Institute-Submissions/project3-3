@@ -14,9 +14,9 @@
                 {% if not firstRound %}
                     <p> Current score: {{score}}</p>
                     {% if success %}
-                        <span style="color: yellow"> Great! Next question</span>
+                        <span style="color: yellow"> Great! Next question {{ count }}</span>
                     {% else %}
-                        <span style="color: grey"> Wrong answer: {{ wrong_answer }}</span>
+                        <span style="color: grey"> Wrong answer to question {{ count }}: {{ wrong_answer }}</span>
                     {% endif %}
                 {% endif %}
                 <div class="game-div">
