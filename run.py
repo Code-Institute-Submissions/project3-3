@@ -1,11 +1,17 @@
 from flask import Flask, render_template, request, redirect
-
+import operator
 import os
 
 app = Flask(__name__)
 
-class Player:
 
+scores = { }
+
+class Player:
+    @staticmethod
+    def getScores():    # returns a list of tuples with highscores
+        return sorted(scores.items(), reverse = True, key=operator.itemgetter(1))
+                
     def __init__(self, name):
         self.name = name
         self.score = 0
@@ -16,12 +22,15 @@ class Player:
         self.score += number
         # since we're adding points, we can as well advance question
         self.question += 1
+        scores[self.name] = self.score
+
         
     def removePoints(self, number = 1):
         self.score -= number
         if self.score < 0:
             self.score = 0
-            
+        scores[self.name] = self.score
+        
     def getQandA(self): # returns ('question', 'answer')
         return questions[self.question]
     def getQuestion(self): # returns 'question'
@@ -72,6 +81,7 @@ def game(username):
     player = users[username]
     question, answer = player.getQandA()
     if ('answer' in request.form):
+        print(Player.getScores())
         if answer.lower() in request.form['answer'].lower():
             player.addPoints()
             return render_template('base.html', count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), username = username, success = True, question = player.getQuestion(), score = player.score)
