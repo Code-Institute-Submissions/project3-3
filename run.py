@@ -4,17 +4,40 @@ import os
 
 app = Flask(__name__)
 
-# list of tuples
-questions = []
+class Player:
+
+    def __init__(self, name):
+        self.name = name
+        self.score = 0
+        self.question = 0
+
+        
+    def addPoints(self, number = 5):
+        self.score += number
+        # since we're adding points, we can as well advance question
+        self.question += 1
+        
+    def removePoints(self, number = 1):
+        self.score -= number
+        if self.score < 0:
+            self.score = 0
+            
+    def getQandA(self):
+        return questions[self.question]
+    def getQuestion(self):
+        return questions[self.question][0]
+    @classmethod
+    def exists(cls, name):
+        return name in users
+    
+questions = [] # ('question', 'answer')
+users = { } # 'name' = Player obj
 
 #
 def loadQuestions():
-    file = 'data/questions.txt'
-    with open(file) as fp:
-        question = ''
-        answer = ''
+    with open('data/questions.txt', 'r') as fp:
+        question, answer = '', ''
         for i, line in enumerate(fp):
-            
             line = line.decode("UTF-8").rstrip()
             if i % 2 == 0:
                 # it's a question
@@ -24,15 +47,7 @@ def loadQuestions():
                 questions.append( (question, answer) )
             
 loadQuestions()
-print(questions)
 
-scores = { }
-def get_next_question(user):
-    return questions[scores[user]['question']]
-    
-def getScore(user):
-    return scores[user]['score']
-    
 @app.route('/')
 def index():
     return render_template('base.html')
@@ -43,29 +58,27 @@ def login():
         username = request.form['Username']
         
         # create a new entry if the user isn't there already
-        if not username in scores:
-            scores[username] = { 'question': 0, 'score': 0, 'answer': questions[0][1] }
+        if not Player.exists(username):
+            users[username] = Player(username)
+
         return redirect(username + '/question')
 
 @app.route('/<username>/question', methods = ['GET', 'POST'])
 def game(username):
-    question, answer = get_next_question(username)
+    player = users[username]
+    question, answer = player.getQandA()
     if ('answer' in request.form):
         if answer.lower() in request.form['answer'].lower():
-            scores[username]['question'] += 1
-            scores[username]['score'] += 3
-            question = get_next_question(username)[0]
-            return render_template('base.html', username = username, success = True, question = question, score = getScore(username))
+            player.addPoints()
+            return render_template('base.html', username = username, success = True, question = player.getQuestion(), score = player.score)
         else:
             #wrong answer
-            scores[username]['score'] -= 1
-            return render_template('base.html', wrong_answer = request.form['answer'], username = username, success = False, question = question, score = getScore(username))
+            player.removePoints()
+            return render_template('base.html', wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
     return render_template('base.html', firstRound = True, username = username, question = question)
     
 @app.route('/<username>', methods = ['GET', 'POST'])
 def user(username):
-
-    #probably need to add a tuple with question/answer to render_template
     return render_template('base.html', username=username)
     
     
