@@ -1,13 +1,15 @@
 .container {
     background-color: #041a3d ;
-    width: 90%;
+    background-image: url('24.jpeg');
+    background-size: cover;
+    width: 100%;
     height: 100%;
     color: silver;
     font-size: 1em;
     text-align: center;
     margin: 0 auto;
     padding-top: 20px;
-    display: inline-block;
+
 }
 body {
     margin: 0;
@@ -19,8 +21,10 @@ body {
     width: 60%;
     height: 70%;
     margin-left: 10%;
-    background-color:#665c5c;
+    /*background-color:#665c5c;*/
     border-radius: 15px;
+    background-image: linear-gradient(to bottom, rgb(99, 68, 68), rgba(255,0,0,0));
+
 }
 .right-box {
     border: 5px solid white;
@@ -30,16 +34,17 @@ body {
     margin-right: 10%;
     height: 70%;
     border-radius: 15px;
+    background-image: linear-gradient(to bottom, rgb(99, 68, 68), rgba(255,0,0,0));
 }
 .game-div {
     margin-top: 50px;
     padding-bottom: 30px;
-    background-color: #604e4e;
+    /* background-color: #604e4e; */
     z-index: 999;
 
 }
 .highscores {
-    background-color: #665c5c;
+
     color: white;
     width: 100%;
     height: 100%;
@@ -53,5 +58,5 @@ ol {
 }
 ol li {
     background-color: #604e4e;
-    margin: 5px;   
+    margin-top: 10px;   
 }
