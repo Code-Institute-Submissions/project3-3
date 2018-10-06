@@ -21,9 +21,11 @@ class Player:
     def addPoints(self, number = 5):
         self.score += number
         # since we're adding points, we can as well advance question
-        self.question += 1
         if self.question >= len(questions)-1:
             self.finished = True
+        else:
+            self.question += 1
+
             
         highscores[self.name] = self.score
 
@@ -37,7 +39,7 @@ class Player:
     def getQandA(self): # returns ('question', 'answer')
         return questions[self.question]
     def getQuestion(self): # returns 'question'
-        return questions[self.question][0]
+        return questions[self.question][0] or questions[-1][0]
     @classmethod
     def exists(cls, name):
         return name in users
@@ -64,6 +66,7 @@ def loadQuestions():
 totalQuestions = loadQuestions()
 
 print (totalQuestions)
+print len(questions) 
 @app.route('/')
 def index():
     return render_template('base.html')
@@ -84,12 +87,14 @@ def login():
 def game(username):
     player = users[username]
     question, answer = player.getQandA()
-    if player.finished:
-        return 'THIS IS THE END'
+
     if ('answer' in request.form):
         print(Player.getScores())
         if answer.lower() in request.form['answer'].lower():
             player.addPoints()
+            if player.finished:
+                return redirect(username + '/finished')
+            
             return render_template('base.html', time = time.time(), scores = Player.getScores(),  count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), username = username, success = True, question = player.getQuestion(), score = player.score)
         else:
             #wrong answer
@@ -101,6 +106,11 @@ def game(username):
 def user(username):
     return render_template('base.html',time = time.time(),  username=username)
     
+
+@app.route('/<username>/finished', methods = ['GET'])
+def finish(username):
+    player = users[username]
+    return render_template("finished.html", player = player, scores = Player.getScores())
     
 if __name__ == '__main__':
     app.run(host = os.getenv('IP'),

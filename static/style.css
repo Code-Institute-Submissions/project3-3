@@ -10,7 +10,18 @@
     margin: 0 auto;
     padding-top: 20px;
 
+
 }
+a:link, a:visited {
+    text-decoration: none;
+    color: yellow;
+    
+}
+a:hover, a:visited:hover {
+    color: white;
+}
+
+
 #inner-stats p {
     margin-left: 10px;
     color: silver;
