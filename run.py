@@ -16,12 +16,15 @@ class Player:
         self.name = name
         self.score = 0
         self.question = 0
-
+        self.finished = False # will be set to true upon answering last question
         
     def addPoints(self, number = 5):
         self.score += number
         # since we're adding points, we can as well advance question
         self.question += 1
+        if self.question >= len(questions)-1:
+            self.finished = True
+            
         highscores[self.name] = self.score
 
         
@@ -43,7 +46,7 @@ questions = [] # ('question', 'answer')
 users = { } # 'name' = Player obj
 
 #
- 
+
 def loadQuestions():
     count = 0
     with open('data/questions.txt', 'r') as fp:
@@ -80,6 +83,8 @@ def login():
 def game(username):
     player = users[username]
     question, answer = player.getQandA()
+    if player.finished:
+        return 'THIS IS THE END'
     if ('answer' in request.form):
         print(Player.getScores())
         if answer.lower() in request.form['answer'].lower():
