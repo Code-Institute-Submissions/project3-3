@@ -2,8 +2,10 @@
 <html>
 
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <title> Riddle Me This</title>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}?v={{time}}">
+    
 </head>
 
 <body>
@@ -11,16 +13,20 @@
     <div class="container">
         <div class="left-box">
             <h1>Riddle Me This</h1>
-            {% if username %} Welcome {{ username }} {% if not firstRound %}
-            <p> Current score: {{score}}</p>
-            {% if success %}
-            <span style="color: yellow"> Great! Next question {{ count }}</span> {% else %}
-            <span style="color: grey"> Wrong answer to question {{ count }}: {{ wrong_answer }}</span> {% endif %} {% endif %}
+            {% if username %}
+                {% if not firstRound %}
+                    {% if success %}
+                        <span style="color: yellow"> Great! Next question </span>
+                    {% else %}
+                        <span style="color: grey"> Wrong answer: {{ wrong_answer }}</span> 
+                    {% endif %}
+                {% endif %}
             <div class="game-div">
-                <span style="font-size: 2em; background-color: white; color: red"> {{ question }} </span>
+                <hr style="margin-top: 100px"/>
+                <span style="font-size: 2em; color: rgb(242, 55, 55)"> {{ question }} </span>
                 <form method="POST" style="margin-top: 20px; margin-right: 10px;">
                     <label for="answer"></label>
-                    <input type="text" name="answer" />
+                    <input type="text" name="answer" autofocus/>
                     <input type="submit" value="Submit" />
                 </form>
             </div>
@@ -30,7 +36,7 @@
             <div style="margin-top:10%">
                 <form method="POST" style="margin-top: 20px; margin-right: 10px;">
                     <label for="Username">Username</label>
-                    <input type="text" name="Username" />
+                    <input type="text" name="Username" autofocus />
                     <input type="submit" value="Submit" />
                 </form>
             </div>
@@ -39,7 +45,11 @@
                 <p><h3>Debug mode</h3></p>
                 <p>Correct answer: <span style="background-color:white; color: red">{{ debug }} </span></p>
             {% endif %}
-
+            <div id='inner-stats' class="inner-box">
+                <p>Player: <span> {{ username }}</span> </p>
+                <p>Question: <span>{{ count }}</span> </p>
+                <p>Score: <span>{{score or 0}}</span></p>
+            </div>
         </div>
         <div class="right-box">
             <div class="highscores">

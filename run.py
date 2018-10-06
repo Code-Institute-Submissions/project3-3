@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import operator
 import os
 import time
@@ -50,7 +50,7 @@ users = { } # 'name' = Player obj
 def loadQuestions():
     count = 0
     with open('data/questions.txt', 'r') as fp:
-        question, answer = '', ''
+        question = answer = ''
         for i, line in enumerate(fp):
             line = line.decode("UTF-8").rstrip()
             if i % 2 == 0: # it's a question
@@ -76,8 +76,9 @@ def login():
         # create a new entry if the user isn't there already
         if not Player.exists(username):
             users[username] = Player(username)
-
-        return redirect(username + '/question')
+        
+        return redirect(url_for('game', count = "[ 1 / {0} ]".format(totalQuestions), username = username, scores = Player.getScores()))
+        #return redirect(username + '/question')
 
 @app.route('/<username>/question', methods = ['GET', 'POST'])
 def game(username):
@@ -94,7 +95,7 @@ def game(username):
             #wrong answer
             player.removePoints()
             return render_template('base.html', debug = answer, time = time.time(), scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
-    return render_template('base.html',time = time.time(),  scores = Player.getScores(), firstRound = True, username = username, question = question)
+    return render_template('base.html', count = '[ 1 / {0} ]'.format(totalQuestions), time = time.time(),  scores = Player.getScores(), firstRound = True, username = username, question = question)
     
 @app.route('/<username>', methods = ['GET', 'POST'])
 def user(username):
