@@ -6,11 +6,13 @@ app = Flask(__name__)
 
 # remove passing debug (answer) to render_template on release
 highscores = { }
-
+for i in range(15):
+    highscores['Empty {0}'.format(i)] = 0
+    
 class Player:
     @staticmethod
     def getScores():    # returns a list of tuples with highscores
-        return sorted(highscores.items(), reverse = True, key=operator.itemgetter(1))
+        return sorted(highscores.items(), reverse = True, key=operator.itemgetter(1))[:10]
                 
     def __init__(self, name):
         self.name = name
@@ -69,7 +71,7 @@ print (totalQuestions)
 print len(questions) 
 @app.route('/')
 def index():
-    return render_template('base.html')
+    return render_template('base.html', count = "[ 0 / {0} ]".format(totalQuestions),scores = Player.getScores())
     
 @app.route('/', methods = ['GET', 'POST'])
 def login():
@@ -104,7 +106,7 @@ def game(username):
     
 @app.route('/<username>', methods = ['GET', 'POST'])
 def user(username):
-    return render_template('base.html',time = time.time(),  username=username)
+    return render_template('base.html', time = time.time(),  username=username)
     
 
 @app.route('/<username>/finished', methods = ['GET'])
