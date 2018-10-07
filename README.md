@@ -1,5 +1,6 @@
 # Riddle Me This
 
+#### [See on Heroku](https://project-3-riddle.herokuapp.com/)
 ## UX
 
 - As a user I want to play a mind-bending guessing game and possibly compare my achievements against other players
@@ -24,7 +25,7 @@
 
 ## Technologies Used
 
-- [Flask framework] (http://flask.pocoo.org/) - to learn it and make use of the 'views' concept
+- [Flask framework](http://flask.pocoo.org/) - to learn it and make use of the 'views' concept
 
 ## Testing
 
@@ -44,40 +45,19 @@
 ## Deployment
 
 1. wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-2. Created heroku account
-    - Created new app with name project-3-riddle
-    - next in the console 'heroku login'
-    - next heroku git:remote -a project-3-riddle
-    - echo web: python run.py > Procfile
-    - sudo pip3 freeze --local > requirements.txt
-    - git add . & commit
-    - git push heroku master
-
-
-
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
-
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
-
-Different values for environment variables (Heroku Config Vars)?
-Different configuration files?
-Separate git branch?
-In addition, if it is not obvious, you should also describe how to run your code locally.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+2. Create heroku account
+    - Create new app with name project-3-riddle
+    - next in the console
+     ```heroku login ```
+    - next
+    - ``` heroku git:remote -a project-3-riddle ```
+    - ``` echo web: python run.py > Procfile ```
+    - ```sudo pip3 freeze --local > requirements.txt```
+    - ```git add .```
+    - ```git commit -m "Heroku setup" ```
+    - ``` git push heroku master```
+    - One last thing is going to our app settings on heroku.com and clicking 'reveal config vars'
+    - Add IP in the 'key' field and '0.0.0.0' in the value field. Click add.
+    - In the next set, add PORT and 5000 respectively
 
 
