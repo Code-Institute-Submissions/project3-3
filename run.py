@@ -2,17 +2,30 @@ from flask import Flask, render_template, request, redirect, url_for
 import operator
 import os
 import time
+import pickle
+
 app = Flask(__name__)
 
 # remove passing debug (answer) to render_template on release
 highscores = { }
-for i in range(15):
-    highscores['Empty {0}'.format(i)] = 0
+
+def save_obj(obj, name ):
+    with open('data/'+ name + '.pkl', 'wb') as f:
+        pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+
+def load_obj(name ):
+    with open('data/' + name + '.pkl', 'rb') as f:
+        return pickle.load(f)
+
+
+if len(highscores) == 0:
+    highscores = load_obj('highscores')
     
 class Player:
     @staticmethod
     def getScores():    # returns a list of tuples with highscores (first 10)
         return sorted(highscores.items(), reverse = True, key=operator.itemgetter(1))[:10]
+
                 
     def __init__(self, name):
         self.name = name
@@ -22,6 +35,7 @@ class Player:
         
     def addPoints(self, number = 5):
         self.score += number
+        save_obj(highscores, 'highscores')
         # since we're adding points, we can as well advance question
         if self.question >= len(questions)-1:
             self.finished = True
@@ -67,8 +81,6 @@ def loadQuestions():
        
 totalQuestions = loadQuestions()
 
-print (totalQuestions)
-print len(questions) 
 @app.route('/')
 def index():
     return render_template('base.html', count = "[ 0 / {0} ]".format(totalQuestions),scores = Player.getScores())
@@ -103,7 +115,6 @@ def game(username):
             return render_template('base.html', debug = answer, time = time.time(), scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
     else:
         if 'skip_button' in request.form:
-            print('second')
             player.addPoints(0) # just take him to the next round
             question, answer = player.getQandA()
             return render_template('base.html', time = time.time(), scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), username = username, success = False, question = question, score = player.score)
