@@ -42,13 +42,17 @@
 
 
             {% else %}
-            <div style="margin-top:10%">
-                <form method="POST" style="margin-top: 20px; margin-right: 10px;">
-                    <label for="Username">Username</label>
-                    <input type="text" name="Username" maxlength="15" autofocus />
-                    <input type="submit" value="Submit" />
-                </form>
-            </div>
+                {% if error_name %}
+                    <span style="padding: 5px; display: block; color: yellow"> {{ error_name }} already exists. Please choose different name</span>
+                {% endif %}
+                <div style="margin-top:10%">
+                    <form method="POST" style="margin-top: 20px; margin-right: 10px;">
+                        <label for="Username">Username</label>
+                        <input type="text" name="Username" maxlength="15" autofocus />
+                        <input type="submit" value="Submit" />
+                    </form>
+                </div>
+                
             {% endif %}
             {% if debug %}
                 <p><h3>Debug mode</h3></p>

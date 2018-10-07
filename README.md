@@ -35,12 +35,14 @@
 
 2. Upon answering the last question I was able to start the game over
 3. Upon pressing the 'skip' button I was taken to the next question as expected
-4. Supplying username and pressing 'submit' allows me to start the game
+4. [FIXED] Supplying username and pressing 'submit' allows me to start the game
     - Tried very long usernames and they look unappealing both in the scoreboard and highscores
-        - This will be solved by adding a limit of 15 characters in the username input box
+        - This will be solved by adding a limit of 15 characters in the username input box 
 5. Tried pressing browser's 'back' button while being on question 3, which took me to the page with question 2, however the game still expects the answer to question 3
     so technically I'm giving a correct answer to the question I see (and had a shot at before) but the script is expecting answer to question 3 and awards me negative points
     Don't know the proper solution to this at the moment
+6. Supplying a username that already exists will allow us to play as one, and add to its existing score by answering questions from the beggining
+    - this will be fixed so that users can't choose existing names
 
 ## Deployment
 

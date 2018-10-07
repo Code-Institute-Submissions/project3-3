@@ -95,9 +95,10 @@ def login():
         username = request.form['Username']
         
         # create a new entry if the user isn't there already
-        if not Player.exists(username):
+        if not Player.exists(username) and not username in highscores:
             users[username] = Player(username)
-        
+        else:
+            return render_template('base.html', error_name = username, count = "[ 0 / {0} ]".format(totalQuestions),scores = Player.getScores())
         return redirect(url_for('game', count = "[ 1 / {0} ]".format(totalQuestions), username = username, scores = Player.getScores()))
         #return redirect(username + '/question')
 
