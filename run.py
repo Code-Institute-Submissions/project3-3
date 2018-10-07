@@ -74,7 +74,7 @@ def loadQuestions():
     with open('data/questions.txt', 'r') as fp:
         question = answer = ''
         for i, line in enumerate(fp):
-            line = line.decode("UTF-8").rstrip()
+            line = line.rstrip()
             if i % 2 == 0: # it's a question
                 question = line
                 count += 1

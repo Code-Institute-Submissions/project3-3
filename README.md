@@ -48,6 +48,12 @@
     - Created new app with name project-3-riddle
     - next in the console 'heroku login'
     - next heroku git:remote -a project-3-riddle
+    - echo web: python run.py > Procfile
+    - sudo pip3 freeze --local > requirements.txt
+    - git add . & commit
+    - git push heroku master
+
+
 
 This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
 
