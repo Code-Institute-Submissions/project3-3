@@ -22,6 +22,7 @@
 
 - Possibly implement highscores.pkl pruning after it reaches certain size
 - Ability for active users to chat
+- Make questions random for each started game?
 
 ## Technologies Used
 
@@ -41,12 +42,12 @@
 5. Tried pressing browser's 'back' button while being on question 3, which took me to the page with question 2, however the game still expects the answer to question 3
     so technically I'm giving a correct answer to the question I see (and had a shot at before) but the script is expecting answer to question 3 and awards me negative points
     Don't know the proper solution to this at the moment
-6. Supplying a username that already exists will allow us to play as one, and add to its existing score by answering questions from the beggining
+6. [FIXED] Supplying a username that already exists will allow us to play as one, and add to its existing score by answering questions from the beggining
     - this will be fixed so that users can't choose existing names
 
 ## Deployment
 
-1. wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+1. ```wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh```
 2. Create heroku account
     - Create new app with name project-3-riddle
     - next in the console
@@ -62,4 +63,6 @@
     - Add IP in the 'key' field and '0.0.0.0' in the value field. Click add.
     - In the next set, add PORT and 5000 respectively
 
+## Credits
 
+I received inspiration for this project from CodeInstitute's milestone project outline
