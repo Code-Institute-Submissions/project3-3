@@ -9,6 +9,9 @@ app = Flask(__name__)
 # remove passing debug (answer) to render_template on release
 highscores = { }
 
+
+# save_obj and load_obj are used to save highscores for persistency
+
 def save_obj(obj, name ):
     with open('data/'+ name + '.pkl', 'wb') as f:
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
@@ -51,6 +54,7 @@ class Player:
         if self.score < 0:
             self.score = 0
         highscores[self.name] = self.score
+        save_obj(highscores, 'highscores')
         
     def getQandA(self): # returns ('question', 'answer')
         return questions[self.question]
