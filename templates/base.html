@@ -18,17 +18,26 @@
                     {% if success %}
                         <span style="color: yellow"> Great! Next question </span>
                     {% else %}
-                        <span style="color: grey"> Wrong answer: {{ wrong_answer }}</span> 
+                        {% if wrong_answer %}
+                            <span style="color: grey"> Wrong answer: {{ wrong_answer }}</span> 
+                        {% else %}
+                            <span style="color: white"> Skipped the previous question</span> 
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             <div class="game-div">
                 <hr style="margin-top: 100px"/>
-                <span style="font-size: 2em; color: rgb(242, 55, 55)"> {{ question }} </span>
-                <form method="POST" style="margin-top: 20px; margin-right: 10px;">
-                    <label for="answer"></label>
+                <span style="display: block; font-size: 2em; color: rgb(242, 55, 55)"> {{ question }} </span>
+                <p>
+                <form method="POST" style="display: inline; margin-top: 20px; margin-right: 10px;">
+                    <label for="answer">Your answer:</label>
                     <input type="text" name="answer" autofocus/>
                     <input type="submit" value="Submit" />
                 </form>
+                <form method="POST" style="display: inline; margin-top: 20px; margin-right: 10px;">
+                    <input type="submit" name="skip_button" value="Skip" />
+                </form>
+                </p>
             </div>
 
 

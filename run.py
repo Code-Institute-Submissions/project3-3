@@ -11,7 +11,7 @@ for i in range(15):
     
 class Player:
     @staticmethod
-    def getScores():    # returns a list of tuples with highscores
+    def getScores():    # returns a list of tuples with highscores (first 10)
         return sorted(highscores.items(), reverse = True, key=operator.itemgetter(1))[:10]
                 
     def __init__(self, name):
@@ -89,9 +89,8 @@ def login():
 def game(username):
     player = users[username]
     question, answer = player.getQandA()
-
+    
     if ('answer' in request.form):
-        print(Player.getScores())
         if answer.lower() in request.form['answer'].lower():
             player.addPoints()
             if player.finished:
@@ -102,6 +101,13 @@ def game(username):
             #wrong answer
             player.removePoints()
             return render_template('base.html', debug = answer, time = time.time(), scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), wrong_answer = request.form['answer'], username = username, success = False, question = question, score = player.score)
+    else:
+        if 'skip_button' in request.form:
+            print('second')
+            player.addPoints(0) # just take him to the next round
+            question, answer = player.getQandA()
+            return render_template('base.html', time = time.time(), scores = Player.getScores(), count = "[ {0} / {1} ]".format(player.question+1, totalQuestions), username = username, success = False, question = question, score = player.score)
+    
     return render_template('base.html', count = '[ 1 / {0} ]'.format(totalQuestions), time = time.time(),  scores = Player.getScores(), firstRound = True, username = username, question = question)
     
 @app.route('/<username>', methods = ['GET', 'POST'])
