@@ -20,7 +20,6 @@ def load_obj(name ):
     with open('data/' + name + '.pkl', 'rb') as f:
         return pickle.load(f)
 
-
 if len(highscores) == 0:
     highscores = load_obj('highscores')
     
