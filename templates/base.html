@@ -1,0 +1,81 @@
+<!<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title> Riddle Me This</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}?v={{time}}">
+    
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="left-box">
+            <h1>Riddle Me This</h1>
+            {% if username %}
+                {% if not firstRound %}
+                    {% if success %}
+                        <span style="color: yellow"> Great! Next question </span>
+                    {% else %}
+                        {% if wrong_answer %}
+                            <span style="color: grey"> Wrong answer: {{ wrong_answer }}</span> 
+                        {% else %}
+                            <span style="color: white"> Skipped the previous question</span> 
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            <div class="game-div">
+                <hr style="margin-top: 100px"/>
+                <span style="padding: 10px; display: block; font-size: 2em; color: rgb(242, 55, 55)"> {{ question }} </span>
+                <p>
+                <form method="POST" style="display: inline; margin-top: 20px; margin-right: 10px;">
+                    <label for="answer">Your answer:</label>
+                    <input type="text" name="answer" autofocus/>
+                    <input type="submit" value="Submit" />
+                </form>
+                <form method="POST" style="display: inline; margin-top: 20px; margin-right: 10px;">
+                    <input type="submit" name="skip_button" value="Skip" />
+                </form>
+                </p>
+            </div>
+
+
+            {% else %}
+                {% if error_name %}
+                    <span style="padding: 5px; display: block; color: yellow"> {{ error_name }} already exists. Please choose different name</span>
+                {% endif %}
+                <div style="margin-top:10%">
+                    <form method="POST" style="margin-top: 20px; margin-right: 10px;">
+                        <label for="Username">Username</label>
+                        <input type="text" name="Username" maxlength="15" autofocus />
+                        <input type="submit" value="Submit" />
+                    </form>
+                </div>
+                
+            {% endif %}
+            {% if debug %}
+                <p><h3>Debug mode</h3></p>
+                <p>Correct answer: <span style="background-color:white; color: red">{{ debug }} </span></p>
+            {% endif %}
+            <div id='inner-stats' class="inner-box">
+                <p>Player: <span> {{ username }}</span> </p>
+                <p>Question: <span>{{ count }}</span> </p>
+                <p>Score: <span>{{score or 0}}</span></p>
+            </div>
+        </div>
+        <div class="right-box">
+            <div class="highscores">
+                <h2 style="margin-top:0px">HIGHSCORES</h2>
+                <ol>
+                    {% for score in scores %}
+                    <li> {{ score[0] }} : {{ score[1] }} </li>
+
+                    {% endfor %}
+                </ol>
+            </div>            
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title> Riddle Me This</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}?v={{time}}">
+    
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="left-box">
+            <h1>Riddle Me This</h1>
+
+            <div class="game-div">
+                <hr style="margin-top: 100px"/>
+                <span style="font-size: 2em; color: rgb(222, 55, 55)"> Thanks for playing! </span>
+                <p>
+                    <a href="{{url_for('index')}}"> Play Again!</a>
+                </p>
+            </div>
+
+            <div id='inner-stats' class="inner-box">
+                <p>Player: <span> {{ player.name }}</span> </p>
+                <p>Question: <span>[ {{player.question + 1}} / {{player.question + 1}} ]</span> </p>
+                <p>Score: <span>{{ player.score}}</span></p>
+            </div>
+        </div>
+        <div class="right-box">
+            <div class="highscores">
+                <h2 style="margin-top:0px">HIGHSCORES</h2>
+                <ol>
+                    {% for score in scores %}
+                    <li> {{ score[0] }} : {{ score[1] }} </li>
+
+                    {% endfor %}
+                </ol>
+            </div>            
+        </div>
+    </div>
+</body>
+
+</html>
