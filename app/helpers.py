@@ -6,11 +6,12 @@ import pickle
 
 app = Flask(__name__)
 
+
 # remove passing debug (answer) to render_template on release
 highscores = { }
 
 
-# save_obj and load_obj are used to save highscores for persistency
+# save_obj and load_obj are used to save highscores for persistency (doesn't quite work on heroku free plan)
 
 def save_obj(obj, name ):
     with open('data/'+ name + '.pkl', 'wb') as f:
@@ -20,8 +21,7 @@ def load_obj(name ):
     with open('data/' + name + '.pkl', 'rb') as f:
         return pickle.load(f)
 
-if len(highscores) == 0:
-    highscores = load_obj('highscores')
+highscores = load_obj('highscores')
     
 class Player:
     @staticmethod
@@ -67,19 +67,14 @@ questions = [] # ('question', 'answer')
 users = { } # 'name' = Player obj
 
 #
+with open('data/questions.txt', 'r') as fp:
+    question = answer = ''
+    for i, line in enumerate(fp):
+        line = line.rstrip()
+        if i % 2 == 0: # it's a question
+            question = line
+        else:
+            answer = line
+            questions.append( (question, answer) )
 
-def loadQuestions():
-    count = 0
-    with open('data/questions.txt', 'r') as fp:
-        question = answer = ''
-        for i, line in enumerate(fp):
-            line = line.rstrip()
-            if i % 2 == 0: # it's a question
-                question = line
-                count += 1
-            else:
-                answer = line
-                questions.append( (question, answer) )
-    return count            
-       
-totalQuestions = loadQuestions()
+totalQuestions = len(questions)

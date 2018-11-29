@@ -1,6 +1,7 @@
 from app.helpers import *
 
 
+
 @app.route('/')
 def index():
     return render_template('base.html', count = "[ 0 / {0} ]".format(totalQuestions),scores = Player.getScores())

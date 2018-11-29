@@ -1,5 +1,7 @@
 # Riddle Me This
 
+A browser game where the player is challenged with answering riddles
+
 #### [See on Heroku](https://project-3-riddle.herokuapp.com/)
 ## UX
 
