@@ -46,6 +46,7 @@ A browser game where the player is challenged with answering riddles
     Don't know the proper solution to this at the moment
 6. [FIXED] Supplying a username that already exists will allow us to play as one, and add to its existing score by answering questions from the beggining
     - this will be fixed so that users can't choose existing names
+7. Storing hgihscores works locally in C9 environment, however Heroku, as I have learned doesn't allow permanent file storage (at least not with the free plan) so the feature of persistent highscores isn't working. I will rewrite it to use a database (since you can have those addons for free) when I have the time
 
 ## Deployment
 
